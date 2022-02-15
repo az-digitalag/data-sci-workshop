@@ -7,11 +7,11 @@ library(udunits2) #for converting
 library(tidyr)
 
 #Read in
-surveys<-readr::read_csv("data_raw/portal_data_joined.csv")
+surveys <- readr::read_csv("data_raw/portal_data_joined.csv")
 str(surveys)
 
 # Restrict rows with filter()
-filter(surveys, genus=="Neotoma")
+filter(surveys, genus == "Neotoma")
 filter(surveys, year == 1977)
 
 # Restrict columns with select()
@@ -28,13 +28,13 @@ surveys %>%
 surveys %>%
   select(-record_id, -month, -day, -plot_id, -taxa, -plot_type) %>%
   filter(!is.na(weight)) %>%
-  mutate(weight_kg=weight/1000,
-         weight_lb= ud.convert(weight,"kg","lb"))
+  mutate(weight_kg = weight/1000,
+         weight_lb = ud.convert(weight,"kg","lb"))
 
 # Challenge 1
-species<-surveys %>%
+species <- surveys %>%
   filter(!is.na(hindfoot_length)) %>%
-  mutate(hindfoot_cm= ud.convert(hindfoot_length,"mm","cm")) %>%
+  mutate(hindfoot_cm = ud.convert(hindfoot_length,"mm","cm")) %>%
   filter(hindfoot_cm < 3) %>%
   select(species_id,hindfoot_cm)
 
@@ -42,14 +42,14 @@ species<-surveys %>%
 surveys %>%
   filter(!is.na(weight)) %>%
   group_by(sex, species_id) %>%
-  summarize(mean_weight=mean(weight),
-          sd_weight=sd(weight),
+  summarize(mean_weight = mean(weight),
+          sd_weight = sd(weight),
           max_weight = max(weight)) %>%
   arrange(desc(max_weight))
 
 # Count options
 #Using dyplr function
-surveys  %>%
+surveys %>%
   count(sex, species_id)
 
 #Using R base function
@@ -57,13 +57,13 @@ table(surveys$sex)
 table(surveys$sex, surveys$species_id)
 
 # Reshaping data with pivot_wider() and pivot_longer()
-surveys_gw<-surveys %>%
+surveys_gw <- surveys %>%
   filter(!is.na(weight)) %>%
   group_by(plot_id, genus) %>%
-  summarize(mean_weight=mean(weight))
+  summarize(mean_weight = mean(weight))
 
 surveys_wide <- surveys_gw %>%
-  tidyr:: pivot_wider(names_from= genus,
+  tidyr:: pivot_wider(names_from = genus,
                       values_from = mean_weight)
 
 surveys_long <- surveys_wide %>%
@@ -72,18 +72,18 @@ surveys_long <- surveys_wide %>%
                       values_to = "mean_weight")
 
 # Challenge 2
-surveys_year<-surveys %>%
+surveys_year <- surveys %>%
   group_by(plot_id, year) %>%
-  summarize(genera_count=n_distinct(genus))
+  summarize(genera_count = n_distinct(genus))
 
 surveys_year_wide <- surveys_year %>%
-  tidyr:: pivot_wider(names_from= year,
+  tidyr:: pivot_wider(names_from = year,
                       values_from = genera_count)
 
 # Alternate way of Challenge 2
 surveys %>%
 group_by(plot_id, year) %>%
-summarize(genera_count=n_distinct(genus))%>%
-tidyr:: pivot_wider(names_from= year,
+summarize(genera_count = n_distinct(genus))%>%
+tidyr:: pivot_wider(names_from = year,
                       values_from = genera_count)
 
