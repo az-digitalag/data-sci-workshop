@@ -80,7 +80,7 @@ surveys_year_wide <- surveys_year %>%
   tidyr:: pivot_wider(names_from= year,
                       values_from = genera_count)
 
-#Alternate idea
+# Alternate way of Challenge 2
 surveys %>%
 group_by(plot_id, year) %>%
 summarize(genera_count=n_distinct(genus))%>%
