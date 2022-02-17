@@ -61,6 +61,19 @@ surveys_long <- surveys_wide %>%
                       values_to = "mean_weight")
 
 # Exporting filtered data
-# Goal: dataset to plot change in species abundance over time
+# Goal: data set to plot change in species abundance over time
+surveys_complete <- surveys %>%
+  filter(!is.na(weight),
+         !is.na(hindfoot_length),
+         !is.na(sex))
 
+# Most common species
+species_counts <- surveys_complete %>%
+  count(species_id) %>%
+  filter(n > 50)
 
+# Only keep the  most common species
+surveys_complete <- surveys_complete %>%
+  filter(species_id %in% species_counts$species_id)
+
+readr::write_csv(surveys_complete, file = "data_clean/surveys_complete.csv")
