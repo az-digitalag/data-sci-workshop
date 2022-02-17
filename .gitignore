@@ -1,2 +1,6 @@
 .Rproj.user
-*.Rproj
+.Rproj
+.Rhistory
+
+# Suppress data_clean/
+data_clean/
