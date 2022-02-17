@@ -91,3 +91,6 @@ surveys_complete <- surveys_complete %>%
 
 #export csv
 write.csv(surveys_complete, "data_clean/surveys_complete.csv")
+
+
+#case_when
