@@ -48,7 +48,7 @@ surveys %>%
 
 # reshaping data with pivot_wider() and pivot_longer()
 surveys_gw <- surveys %>%
-  filter(is.na(weight)) %>%
+  filter(is.na(weight)) %>%    #remove NA in weight column
   group_by(plot_id, genus) %>%
   summarize(mean_weight = mean(weight))
 
@@ -62,5 +62,38 @@ surveys_wide <- surveys_gw %>%
                         names_to = "genus",
                         values_to = "mean_weight")
 
+# exporting filtered data (goal: format a dataset to plot change in species abundance over time)
+surveys_complete <- surveys %>%
+  filter(!is.na(weight), !is.na(hindfoot_length), !is.na(sex))
+
+  # most common species
+  species_counts <- surveys_complete %>%
+    count(species_id) %>%
+    filter(n > 50) #want to include only species with > 50 observations
+
+  # add most common species dataframe to our data
+  surveys_complete <- surveys_complete %>%
+    filter(species_id %in% species_counts$species_id)
+
+# write new csv and put it in new 'data clean' folder
+readr::write_csv(surveys_complete, file = "data_clean/surveys_complete.csv")
+
+
+
+
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
