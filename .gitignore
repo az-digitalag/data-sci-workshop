@@ -1,7 +1,10 @@
 .Rproj.user
 *.Rproj
 .Rhistory
+.Rdata
 
 
 # Suppress data_clean/
 data_clean/
+*.txt
+*.zip
