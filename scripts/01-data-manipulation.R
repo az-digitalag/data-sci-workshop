@@ -112,3 +112,31 @@ surveys_long <- surveys_wide %>%
                names_to = "genus",
                values_to =  "mean_weight")
 View(surveys_long)
+
+
+##### Exporting filtered data #####
+# Goal: data set to plot change in species abundance over time 
+surveys_complete <- surveys %>%
+  filter(!is.na(weight),
+         !is.na(hindfoot_length),
+         !is.na(sex))
+
+# Most common species
+species_count <- surveys_complete %>%
+  count(species_id)
+
+# Now I want the species that have at least 50 observations
+species_count <- surveys_complete %>%
+  filter(species_id >50) %>%
+  count(species_id)
+
+species_counts <- surveys_complete %>%
+  count(species_id) %>%
+  filter(n > 50)
+
+# Only keep the most common species
+surveys_complete <- surveys_complete %>%
+  filter(species_id %in% species_counts$species_id)
+
+# Create a new csv and save it in a repo folder
+write_csv(surveys_complete, file = "data_clean/surveys_complete.csv")
