@@ -126,7 +126,7 @@ species_counts <- surveys_complete %>%
 surveys_complete <- surveys_complete %>%
   filter(species_id %in% species_counts$species_id)
 
-readr::write_csv(surveys_complete, file = "data_clean/surveys_complete.csv")
+readr::write_csv(surveys_complete, file = "data-sci-workshop/data_clean/surveys_complete.csv")
 
   
   
