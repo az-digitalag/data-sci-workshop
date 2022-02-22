@@ -59,13 +59,14 @@ ggplot(data = surveys_complete,
 
 
 # Its nice to combine dplyr and ggplot b/c it allows for different parsigng of data
-surveys_complete %>%
+yearly_counts <- surveys_complete %>%
   group_by(year, genus) %>%
-  sumarize(n = n())
+  summarize(n = n())
 
 # yearly_counts <- surveys_complete %>%
 #  count(year, genus)
 
+# color assumes you want to group so you can just use color
 ggplot(data = yearly_counts,
        mapping = aes(x = year,
                      y = n,
