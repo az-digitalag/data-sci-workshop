@@ -1,5 +1,6 @@
-.Rproj.user
+*.Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 data_clean/
+.Rproj.user
