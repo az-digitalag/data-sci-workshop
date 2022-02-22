@@ -2,3 +2,4 @@
 *.Rproj
 
 data_clean/
+data_raw/
