@@ -1,0 +1,19 @@
+---
+title: "Portal Data Exploration"
+author: "Lia Ossanna"
+date: "2/24/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Purpose
+Looking at Portal data, especially *Dipodomys*.
+
+```{r}
+data <- read.csv("https://ndownloader.figshare.com/files/2292172")
+head(data)
+```
+
