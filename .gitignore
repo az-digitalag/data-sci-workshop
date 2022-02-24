@@ -11,3 +11,7 @@ data_clean
 
 #Suppress plots/
 plots
+
+#Suppress Rmarkdown related file
+explore_portal.Rmd
+explore_portal.html
