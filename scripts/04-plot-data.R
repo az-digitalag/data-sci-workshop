@@ -47,3 +47,63 @@ ggplot(data = yearly_counts,
                      y = n,
                      group = genus)) + 
   geom_line()
+
+
+##### Workshop part 2 #####
+
+ggplot(data = yearly_counts, 
+       mapping = aes(x = year,
+                     y = n,
+                     color = genus)) + 
+  geom_line()
+
+
+# Faceting
+
+ggplot(data = yearly_counts, 
+       mapping = aes(x = year,
+                     y = n,
+                     color = genus)) + 
+  geom_line() +
+  facet_wrap(~genus,
+             scales = "free_y")
+
+
+fig1 <- surveys_complete %>% 
+  group_by(year,genus, sex) %>%
+  summarize(n = n()) %>%
+ggplot(mapping = aes(x = year,
+                     y = n,
+                     color = sex)) + 
+  geom_line() +
+  facet_wrap(vars(genus),
+             scales = "free_y") + 
+  theme_bw(base_size = 12)
+
+
+# Exporting plots
+
+if(!dir.exists("plots")) {
+  dir.create("plots")
+}
+
+ggsave(filename = "plots/counts_genus.png",
+       plot = fig1,
+       width = 6, 
+       height = 4, 
+       units = "in")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
