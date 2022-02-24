@@ -6,3 +6,6 @@ data-sci-workshop.Rproj
 
 #suppress data_clean/
 data_clean/
+
+#plotting practice files
+plots/
