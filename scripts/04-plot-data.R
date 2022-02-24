@@ -74,7 +74,7 @@ surveys_complete %>%
              scales = "free_y")
 
 # Facet_grid
-surveys_complete %>%
+fig1 <- surveys_complete %>%
   group_by(genus, year, sex) %>%
   summarize (n = n()) %>%
   ggplot(mapping = aes(x = year,
@@ -83,5 +83,38 @@ surveys_complete %>%
   geom_line() +
   facet_grid(cols = vars(genus),
              rows = vars(sex),
-             scales = "free_y")
+             scales = "free_y")+
+  theme_bw(base_size = 8)
 
+#### Exporting plots ####
+if(!dir.exists("plot")) {
+  dir.create("plots")
+}
+
+ggsave(filename = "plots/Counts_by_genus.png", 
+       plot = fig1,
+       width = 8,
+       height = 4,
+       units ="in")
+
+# Challenge : write a for loop to output time series of species count
+# by genus. Save to the plots folder
+genus <- unique(surveys_complete$genus)
+
+for(g in genus) {
+  fig_genus <- surveys_complete %>%
+    filter(genus == g) %>%
+    group_by(year, species) %>%
+    summarize (n = n()) %>%
+    ggplot(mapping = aes(x = year,
+                         y = n,
+                         color = species)) + 
+    geom_line() +
+    ggtitle(g)
+  
+ggsave(filename = paste0("plots/counts_genus_", g, ".png"), 
+         plot = fig_genus,
+         width = 8,
+         height = 4,
+         units ="in")
+}
