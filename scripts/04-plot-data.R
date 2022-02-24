@@ -47,10 +47,41 @@ yearly_count <- surveys_complete %>%
   group_by(genus, year) %>%
   summarize (n = n())
  
-#surveys_complete %>%
-# count(genus, year)
-
 ggplot(data = yearly_count, mapping = aes(x = year,
                                           y = n,
-                                          group = genus)) + 
+                                          color = genus)) + 
   geom_line()
+
+#### Piping into ggplot ####
+surveys_complete %>%
+  group_by(genus, year) %>%
+  summarize (n = n()) %>%
+  ggplot(mapping = aes(x = year,
+                      y = n,
+                      color = genus)) + 
+  geom_line()
+  
+# Facet_wrap
+surveys_complete %>%
+  group_by(genus, year, sex) %>%
+  summarize (n = n()) %>%
+  ggplot(mapping = aes(x = year,
+                         y = n,
+                       color = sex)) + 
+  geom_line() +
+  facet_wrap(~genus, 
+             ncol = 2,
+             scales = "free_y")
+
+# Facet_grid
+surveys_complete %>%
+  group_by(genus, year, sex) %>%
+  summarize (n = n()) %>%
+  ggplot(mapping = aes(x = year,
+                       y = n,
+                       color = sex)) + 
+  geom_line() +
+  facet_grid(cols = vars(genus),
+             rows = vars(sex),
+             scales = "free_y")
+
