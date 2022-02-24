@@ -4,3 +4,7 @@
 
 # Supppress data_clean/
 data_clean/
+
+# Suppress txt and zip files
+*.txt
+*.zip
