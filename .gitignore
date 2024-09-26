@@ -1,0 +1,17 @@
+.Rproj.user
+*.Rproj
+.Rhistory
+
+#Suppress data_clean/
+data_clean
+
+#Supress txt and zip files
+*.txt
+*.zip
+
+#Suppress plots/
+plots
+
+#Suppress Rmarkdown related file
+explore_portal.Rmd
+explore_portal.html
